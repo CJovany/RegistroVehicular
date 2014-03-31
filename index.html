@@ -1,0 +1,309 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Control Vehicular ITSL</title>
+<meta name="viewport" content="width=device-width, user-scalable=no"/>
+<link rel="stylesheet" href="css/jquery.mobile-1.4.2.min.css">
+<link rel="stylesheet" href="css/jquery.mobile.icons-1.4.2.min.css">
+<icon src=
+<!--link rel="stylesheet" href="css/jqm-demos.css"-->
+<script src="js/jquery.js"></script>
+<!--script src="js/index.js"></script-->
+<script src="js/jquery.mobile-1.4.2.min.js"></script>
+
+<script type="text/javascript">
+$(function(){
+	$("#enviadatos").click(function(){		
+		var nombre=$("#nombre").val();		
+		var apPat=$("#apPat").val();
+		var apMat=$("#apMat").val();
+		var cargo=$("#cargo").val();
+		var telefono=$("#telefono").val();		
+		var contrasena=$("#contr").val();
+		var auto1=$("#placa1").val();
+		var auto2=$("#placa2").val();
+		var auto3=$("#placa3").val();
+		
+		$.ajax({
+			type:"POST",
+			url:"registrar.php",
+			data: ({Nombre: nombre,ApellidoP: apPat,ApellidoM: apMat, Cargo: cargo,Telefono:telefono,Contra:contrasena, Autos1:auto1, Autos2:auto2, Autos3:auto3}),
+			cache: false,
+			dataType: "text",
+			success: exitosa
+		})
+		});	
+		function exitosa(data){
+			alert(data);
+			}
+	});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$("#consultadatos").click(function(){		
+		var tarj=$("#tarj").val();
+		var nombre=$("#nomc").val();				
+		var contrasena=$("#pasc").val();
+		
+		$.ajax({
+			type:"POST",
+			url:"consultar.php",
+			data: ({Tarjeton: tarj, Nombre: nombre, Contra:contrasena}),
+			cache: false,
+			dataType: "text",
+			success: exitosa
+		})
+		});	
+		function exitosa(data){
+			alert(data);
+			}
+	});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$("#modificadatos").click(function(){		
+		var nombre=$("#nommod").val();				
+		var contrasena=$("#passmod").val();
+		var tarjeton=$("#tarmod").val();
+		var nombre1=$("#nombremod").val();
+		var apepat=$("#apPatmod").val();
+		var apemat=$("#apMatmod").val();
+		var cargomo=$("#cargomod").val();
+		var tel=$("#telefonomod").val();
+		var carro1=$("#car1").val();
+		var carro2=$("#car2").val();
+		var carro3=$("#car3").val();		
+		
+		
+		$.ajax({
+			type:"POST",
+			url:"modificar.php",
+			data: ({Nombre: nombre,Contra:contrasena, Tarj: tarjeton, Nom2: nombre1, ApPat:apepat, ApMat:apemat, Cargo:cargomo, Telef: tel, Car1:carro1, Car2: carro2, Car3: carro3}),
+			cache: false,
+			dataType: "text",
+			success: exitosa
+		})
+		});	
+		function exitosa(data){
+			alert(data);
+			}
+	});
+</script>
+
+<script type="text/javascript">
+$(function(){
+	$("#eliminaDatos").click(function(){		
+		var nombre=$("#nomElim").val();				
+		var contrasena=$("#passElim").val();
+		
+		$.ajax({
+			type:"POST",
+			url:"eliminar.php",
+			data: ({Nombre: nombre,Contra:contrasena}),
+			cache: false,
+			dataType: "text",
+			success: exitosa
+		})
+		});	
+		function exitosa(data){
+			alert(data);
+						
+			}
+	});
+</script>
+
+
+</head>
+
+<body>
+<div data-role="page" id="page">
+	<div data-role="header" data-theme="b">
+		<h1>BIENVENIDO</h1>
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+	</div>
+	<div data-role="content" data-theme="b">	
+		<ul data-role="listview" id="menu" data-theme="e" data-inset="true">
+			<li data-icon="plus"><a href="#registrar">REGISTRAR</a></li>
+            <li data-icon="search"><a href="#consultar">CONSULTAR</a></li>
+			<li data-icon="edit"><a href="#modificar">MODIFICAR</a></li>
+            <li data-icon="delete"><a href="#eliminar">ELIMINAR</a></li>
+		</ul>		
+	</div>
+	<div data-role="footer" data-theme="b" class="ui-bar">
+		<h4>¡Por una cultura científica, tecnológica y sustentable!</h4>        
+	</div>
+</div>
+
+<div data-role="page" id="registrar" data-theme="b">
+	<div data-role="header" data-theme="a">
+		<h1>REGISTRAR</h1>
+
+	</div>
+	<div data-role="content">
+    	<label for="nombre">Nombre</label>
+		<input type="text" id="nombre" name="nombre"		 placeholder="Tu nombre"/>
+        Apellido Paterno: <input type="text" id="apPat" name="apPat" placeholder="Ap. paterno"/>
+
+        Apellido Materno: <input type="text" id="apMat" name="apMat" placeholder="Ap. materno"/>
+	<div class="ui-field-contain">
+        Cargo:<select name="cargo" id="cargo" data-theme="b" data-native-menu="false">
+        <option value="Docente">Docente</option>
+        <option value="Estudiante">Estudiante</option>
+        </select><br>
+     </div>
+        Número de telefono:<input type="tel" id="telefono" name="telefono" placeholder="p.e 5511526734"/>
+        Contraseña:<input type="password" id="contr" name="contr"/>
+        <br>
+        <center><h2>Autos a registrar:</h2></center>
+        <h4>AUTO 1</h4>
+        No. de placas: <input type="text" id="placa1" name="placa1">
+        <h4>AUTO 2</h4>
+        No. de placas: <input type="text" id="placa2" name="placa2">
+		<h4>AUTO 3</h4>
+        No. de placas: <input type="text" id="placa3" name="placa3">
+        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-top ui-icon-check" type="button" data-theme="a" id="enviadatos">Enviar</button>
+        <br>
+        </div>
+	<div data-role="footer" data-position="fixed" data-id="pie1">
+		<h4>Control vehicular ITSL</h4>
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#registrar" data-icon="plus" data-iconpos="notext"></a></li>
+               	<li><a href="#consultar" data-icon="search" data-iconpos="notext"></a></li>
+                <li><a href="#page" data-icon="home" class="ui-btn-active"></a></li>
+            	<li><a href="#modificar" data-icon="edit" data-iconpos="notext"></a></li>
+            	<li><a href="#eliminar" data-icon="delete" data-iconpos="notext"></a></li>                                
+            </ul>
+        </div>
+	</div>
+</div>
+
+<div data-role="page" id="consultar" data-theme="b">
+	<div data-role="header" data-theme="a">
+		<h1>CONSULTAR</h1>
+	</div>
+	<div data-role="content">	
+		Ingresa tu Número de tarjeton:
+        <input type="text" id="tarj" name="tarj">        
+        Ingresa tu contraseña:
+        <input type="password" id="pasc" name="pasc">
+        <br>
+        <button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-top ui-icon-search" type="button" data-theme="b" id="consultadatos">Consultar</button>
+	</div>
+	<div data-role="footer" data-position="fixed" data-id="pie1">
+		<h4>Control vehicular ITSL</h4>
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#registrar" data-icon="plus" data-iconpos="notext"></a></li>
+               	<li><a href="#consultar" data-icon="search" data-iconpos="notext"></a></li>
+                <li><a href="#page" data-icon="home" class="ui-btn-active"></a></li>                
+            	<li><a href="#modificar" data-icon="edit" data-iconpos="notext"></a></li>
+            	<li><a href="#eliminar" data-icon="delete" data-iconpos="notext"></a></li>                                
+            </ul>
+        </div>
+	</div>
+</div>
+
+<div data-role="page" id="modificar" data-theme="b">
+	<div data-role="header" data-theme="a">
+		<h1>MODIFICAR</h1>
+	</div>
+	<div data-role="content">	
+		Ingresa tu nombre:
+        <input type="text" id="nommod" name="nommod">
+        Ingresa tu contraseña:
+        <input type="password" id="passmod" name="passmod">
+        <br>
+        <a href="#modificarAutoDatos" data-role="button" data-theme="b" class="ui-btn ui-shadow ui-corner-all ui-btn-icon-top ui-icon-arrow-r">MODIFICAR</a>
+	</div>
+	<div data-role="footer" data-position="fixed" data-id="pie1">
+		<h4>Control vehicular ITSL</h4>        
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#registrar" data-icon="plus" data-iconpos="notext"></a></li>
+               	<li><a href="#consultar" data-icon="search" data-iconpos="notext"></a></li>
+                <li><a href="#page" data-icon="home" class="ui-btn-active"></a></li>                
+            	<li><a href="#modificar" data-icon="edit" data-iconpos="notext"></a></li>
+            	<li><a href="#eliminar" data-icon="delete" data-iconpos="notext"></a></li>                                
+            </ul>
+        </div>
+	</div>
+</div>
+
+<div data-role="page" id="modificarAutoDatos" data-theme="b">
+	<div data-role="header" data-theme="a">
+		<h1>MODIFICAR</h1>
+	</div>
+	<div data-role="content">			
+        Número de Tarjeton Asignado: <input type="number" id="tarmod" name="tarmod" placeholder="0,1,2,3,4,5..."><BR>
+        
+        Nombre: <input type="text" id="nombremod" name="nombremod"		 placeholder="Tu nombre"/>
+        Apellido Paterno: <input type="text" id="apPatmod" name="apPatmod" placeholder="Ap. paterno"/>
+
+        Apellido Materno: <input type="text" id="apMatmod" name="apMatmod" placeholder="Ap. materno"/>
+	
+        Cargo:<select data-theme="b" name="cargomod" id="cargomod" data-theme="a" data-native-menu="false">
+        <option value="Docente">Docente</option>
+        <option value="Estudiante">Estudiante</option>
+        </select>
+        Número de telefono:<input type="text" id="telefonomod" name="telefonomod" placeholder="p.e 5511526734"/>        
+        Placas Auto 1: <input type="text" id="car1" name="car1">
+        Placas Auto 2: <input type="text" id="car2" name="car2">
+        Placas Auto 3: <input type="text" id="car3" name="car3">
+        
+        <br>
+		<button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-top ui-icon-edit" type="button" data-theme="b" id="modificadatos">ACEPTAR</button>
+	</div>
+	<div data-role="footer" data-position="fixed" data-id="pie1">
+		<h4>Control vehicular ITSL</h4>
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#registrar" data-icon="plus" data-iconpos="notext"></a></li>
+               	<li><a href="#consultar" data-icon="search" data-iconpos="notext"></a></li>
+                <li><a href="#page" data-icon="home" class="ui-btn-active"></a></li>                
+            	<li><a href="#modificar" data-icon="edit" data-iconpos="notext"></a></li>
+            	<li><a href="#eliminar" data-icon="delete" data-iconpos="notext"></a></li>                                
+            </ul>
+        </div>
+	</div>
+</div>
+
+
+
+
+<div data-role="page" id="eliminar" data-theme="b">
+	<div data-role="header" data-theme="a">
+		<h1>ELIMINAR</h1>
+	</div>
+	<div data-role="content">	
+		Ingresa tu nombre:
+        <input type="text" id="nomElim" name="nomElim">
+        Ingresa tu contraseña:
+        <input type="password" id="passElim" name="passElim">
+		<br>
+		<button class="ui-btn ui-shadow ui-corner-all ui-btn-icon-top ui-icon-check" id="eliminaDatos" name="eliminaDatos">ACEPTAR</button>
+	</div>
+	<div data-role="footer" data-position="fixed">
+		<h4>Control vehicular ITSL</h4>
+        <center><img src="images/logo tec.jpg" height="120" width="120"></center>
+        <div data-role="navbar">
+        	<ul>
+            	<li><a href="#registrar" data-icon="plus" data-iconpos="notext"></a></li>
+               	<li><a href="#consultar" data-icon="search" data-iconpos="notext"></a></li>
+                <li><a href="#page" data-icon="home" class="ui-btn-active"></a></li>                
+            	<li><a href="#modificar" data-icon="edit" data-iconpos="notext"></a></li>
+            	<li><a href="#eliminar" data-icon="delete" data-iconpos="notext"></a></li>                                
+            </ul>
+        </div>
+	</div>
+</div>
+
+</body>
+</html>
